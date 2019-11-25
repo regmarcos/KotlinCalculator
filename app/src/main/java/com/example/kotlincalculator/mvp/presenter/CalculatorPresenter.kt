@@ -2,23 +2,22 @@ package com.example.kotlincalculator.mvp.presenter
 
 import com.example.kotlincalculator.mvp.model.CalculatorModel
 import com.example.kotlincalculator.mvp.view.CalculatorView
-import com.example.kotlincalculator.utils.EMPTY_STRING
 import com.example.kotlincalculator.utils.ZERO
 
-class CalculatorPresenter (view : CalculatorView, model : CalculatorModel) {
-    val view : CalculatorView = view
-    var model : CalculatorModel = model
-    fun onNumberPresed(number : String){
+class CalculatorPresenter(view: CalculatorView, model: CalculatorModel) {
+    val view: CalculatorView = view
+    var model: CalculatorModel = model
+    fun onNumberPressed(number: String) {
         when {
-            model.firstOperand == EMPTY_STRING -> {
+            model. firstOperand.isEmpty() -> {
                 model.firstOperand = number
                 view.setVisor(model.firstOperand)
             }
-            model.firstOperand != EMPTY_STRING && model.operator == EMPTY_STRING -> {
+            model.firstOperand.isNotEmpty() && model.operator.isEmpty()-> {
                 model.firstOperand += number
                 view.setVisor(model.firstOperand)
             }
-            model.operator != EMPTY_STRING && model.secondOperand == EMPTY_STRING -> {
+            model.operator.isNotEmpty() && model.secondOperand.isEmpty() -> {
                 model.secondOperand = number
                 view.setVisor("${model.firstOperand} ${model.operator} ${model.secondOperand}")
             }
@@ -28,13 +27,14 @@ class CalculatorPresenter (view : CalculatorView, model : CalculatorModel) {
             }
         }
     }
-    fun onOperatorPressed(operator: String){
+
+    fun onOperatorPressed(operator: String) {
         when {
-            model.firstOperand == EMPTY_STRING && model.result == EMPTY_STRING -> {
+            model.firstOperand.isEmpty()&& model.result.isEmpty() -> {
                 model.operator = operator
                 view.setVisor("$ZERO  ${model.operator}")
             }
-            model.firstOperand == EMPTY_STRING && model.result != EMPTY_STRING -> {
+            model.firstOperand.isEmpty() && model.result.isNotEmpty()-> {
                 model.operator = operator
                 model.firstOperand = model.result
                 view.setVisor("${model.firstOperand} ${model.operator}")
@@ -45,7 +45,8 @@ class CalculatorPresenter (view : CalculatorView, model : CalculatorModel) {
             }
         }
     }
-    fun onEqualsPressed(){
+
+    fun onEqualsPressed() {
         //TODO equals funcionality
     }
 }

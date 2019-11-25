@@ -2,11 +2,23 @@ package com.example.kotlincalculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import com.example.kotlincalculator.mvp.model.CalculatorModel
 import com.example.kotlincalculator.mvp.presenter.CalculatorPresenter
 import com.example.kotlincalculator.mvp.view.CalculatorView
+import com.example.kotlincalculator.utils.EIGHT
+import com.example.kotlincalculator.utils.FIVE
+import com.example.kotlincalculator.utils.FOUR
+import com.example.kotlincalculator.utils.MINUS
+import com.example.kotlincalculator.utils.MULTIPLY
+import com.example.kotlincalculator.utils.NINE
+import com.example.kotlincalculator.utils.ONE
+import com.example.kotlincalculator.utils.SEVEN
+import com.example.kotlincalculator.utils.SHARE
+import com.example.kotlincalculator.utils.SIX
+import com.example.kotlincalculator.utils.SUM
+import com.example.kotlincalculator.utils.THREE
+import com.example.kotlincalculator.utils.TWO
+import com.example.kotlincalculator.utils.ZERO
 import kotlinx.android.synthetic.main.activity_main.button_zero
 import kotlinx.android.synthetic.main.activity_main.button_one
 import kotlinx.android.synthetic.main.activity_main.button_two
@@ -22,7 +34,7 @@ import kotlinx.android.synthetic.main.activity_main.button_multiply
 import kotlinx.android.synthetic.main.activity_main.button_share
 import kotlinx.android.synthetic.main.activity_main.button_subtract
 
-class CalculatorActivity : AppCompatActivity(), View.OnClickListener {
+class CalculatorActivity : AppCompatActivity() {
     var presenter = CalculatorPresenter(CalculatorView(this), CalculatorModel())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,33 +43,19 @@ class CalculatorActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setListeners() {
-        button_zero.setOnClickListener(this)
-        button_one.setOnClickListener(this)
-        button_two.setOnClickListener(this)
-        button_three.setOnClickListener(this)
-        button_four.setOnClickListener(this)
-        button_five.setOnClickListener(this)
-        button_six.setOnClickListener(this)
-        button_seven.setOnClickListener(this)
-        button_eight.setOnClickListener(this)
-        button_nine.setOnClickListener(this)
-        button_sum.setOnClickListener(this)
-        button_subtract.setOnClickListener(this)
-        button_multiply.setOnClickListener(this)
-        button_share.setOnClickListener(this)
-    }
-
-    override fun onClick(view: View?) {
-        val buttonPressed: String = (view as Button).text.toString()
-        when (view.id) {
-            R.id.button_zero, R.id.button_one, R.id.button_two, R.id.button_three, R.id.button_four,
-            R.id.button_five, R.id.button_six, R.id.button_seven, R.id.button_eight, R.id.button_nine -> {
-                presenter.onNumberPresed(buttonPressed)
-            }
-            R.id.button_sum, R.id.button_subtract, R.id.button_multiply, R.id.button_share -> {
-                presenter.onOperatorPressed(buttonPressed)
-            }
-        }
+        button_zero.setOnClickListener { presenter.onNumberPressed(ZERO) }
+        button_one.setOnClickListener { presenter.onNumberPressed(ONE) }
+        button_two.setOnClickListener { presenter.onNumberPressed(TWO) }
+        button_three.setOnClickListener { presenter.onNumberPressed(THREE) }
+        button_four.setOnClickListener { presenter.onNumberPressed(FOUR) }
+        button_five.setOnClickListener { presenter.onNumberPressed(FIVE) }
+        button_six.setOnClickListener { presenter.onNumberPressed(SIX) }
+        button_seven.setOnClickListener { presenter.onNumberPressed(SEVEN) }
+        button_eight.setOnClickListener { presenter.onNumberPressed(EIGHT) }
+        button_nine.setOnClickListener { presenter.onNumberPressed(NINE) }
+        button_sum.setOnClickListener { presenter.onOperatorPressed(SUM) }
+        button_subtract.setOnClickListener { presenter.onOperatorPressed(MINUS) }
+        button_multiply.setOnClickListener { presenter.onOperatorPressed(MULTIPLY) }
+        button_share.setOnClickListener { presenter.onOperatorPressed(SHARE) }
     }
 }
-
