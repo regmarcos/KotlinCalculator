@@ -8,7 +8,6 @@ import com.example.kotlincalculator.utils.ZERO
 class CalculatorPresenter (view : CalculatorView, model : CalculatorModel) {
     val view : CalculatorView = view
     var model : CalculatorModel = model
-
     fun onNumberPresed(number : String){
         when {
             model.firstOperand == EMPTY_STRING -> {
@@ -29,7 +28,6 @@ class CalculatorPresenter (view : CalculatorView, model : CalculatorModel) {
             }
         }
     }
-
     fun onOperatorPressed(operator: String){
         when {
             model.firstOperand == EMPTY_STRING && model.result == EMPTY_STRING -> {
@@ -47,7 +45,6 @@ class CalculatorPresenter (view : CalculatorView, model : CalculatorModel) {
             }
         }
     }
-
     fun onEqualsPressed(){
         //TODO equals funcionality
     }
