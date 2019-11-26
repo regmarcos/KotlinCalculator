@@ -19,6 +19,8 @@ import com.example.kotlincalculator.utils.SUM
 import com.example.kotlincalculator.utils.THREE
 import com.example.kotlincalculator.utils.TWO
 import com.example.kotlincalculator.utils.ZERO
+import kotlinx.android.synthetic.main.activity_main.button_clear
+import kotlinx.android.synthetic.main.activity_main.button_clear_all
 import kotlinx.android.synthetic.main.activity_main.button_zero
 import kotlinx.android.synthetic.main.activity_main.button_one
 import kotlinx.android.synthetic.main.activity_main.button_two
@@ -61,5 +63,7 @@ class CalculatorActivity : AppCompatActivity() {
         button_share.setOnClickListener { presenter.onOperatorPressed(SHARE) }
         button_equal.setOnClickListener { presenter.onEqualsPressed() }
         button_point.setOnClickListener { presenter.onPointPressed() }
+        button_clear.setOnClickListener { presenter.onClearPressed() }
+        button_clear_all.setOnClickListener { presenter.onClearAllPressed() }
     }
 }

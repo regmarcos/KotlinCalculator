@@ -94,4 +94,28 @@ class CalculatorPresenter(private val view: CalculatorView, private var model: C
             }
         }
     }
+
+    fun onClearPressed(){
+        when {
+            model.secondOperand.isNotEmpty() -> {
+                model.secondOperand = model.secondOperand.dropLast(1)
+                view.setVisor("${model.firstOperand}  ${model.operator}  ${model.secondOperand}")
+            }
+            model.operator.isNotEmpty() -> {
+                model.operator = model.operator.drop(1)
+                view.setVisor(model.firstOperand)
+            }
+            model.firstOperand.isNotEmpty() -> {
+                model.firstOperand = model.firstOperand.dropLast(1)
+                view.setVisor(model.firstOperand)
+            }
+        }
+    }
+
+    fun onClearAllPressed(){
+        model.cleanVisor()
+        model.result = EMPTY_STRING
+        view.setVisor(EMPTY_STRING)
+        view.showResult(EMPTY_STRING)
+    }
 }
