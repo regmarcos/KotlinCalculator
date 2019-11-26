@@ -16,3 +16,4 @@ const val MINUS : String = "-"
 const val MULTIPLY : String = "*"
 const val SHARE : String = "/"
 const val POINT : String = "."
+const val DROPPED: Int = 1

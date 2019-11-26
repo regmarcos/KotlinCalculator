@@ -3,6 +3,7 @@ package com.example.kotlincalculator.mvp.presenter
 import com.example.kotlincalculator.R
 import com.example.kotlincalculator.mvp.model.CalculatorModel
 import com.example.kotlincalculator.mvp.view.CalculatorView
+import com.example.kotlincalculator.utils.DROPPED
 import com.example.kotlincalculator.utils.EMPTY_STRING
 import com.example.kotlincalculator.utils.MINUS
 import com.example.kotlincalculator.utils.MULTIPLY
@@ -28,7 +29,7 @@ class CalculatorPresenter(private val view: CalculatorView, private var model: C
             }
             else -> {
                 model.secondOperand += number
-                view.setVisor("${model.firstOperand}  ${model.operator}  ${model.secondOperand}")
+                view.setVisor("${model.firstOperand} ${model.operator} ${model.secondOperand}")
             }
         }
     }
@@ -54,32 +55,34 @@ class CalculatorPresenter(private val view: CalculatorView, private var model: C
     }
 
     fun onEqualsPressed() {
-        when (model.operator) {
-            SUM -> {
-                model.result =
-                    (model.firstOperand.toFloat() + model.secondOperand.toFloat()).toString()
-            }
-            MINUS -> {
-                model.result =
-                    (model.firstOperand.toFloat() - model.secondOperand.toFloat()).toString()
-            }
-            MULTIPLY -> {
-                model.result =
-                    (model.firstOperand.toFloat() * model.secondOperand.toFloat()).toString()
-            }
-            SHARE -> {
-                if (model.secondOperand != ZERO) {
+        if (model.secondOperand.isNotEmpty()) {
+            when (model.operator) {
+                SUM -> {
                     model.result =
-                        (model.firstOperand.toFloat() / model.secondOperand.toFloat()).toString()
-                } else {
-                    view.sendErrorMessage(R.string.toast_msg_divide)
+                        (model.firstOperand.toFloat() + model.secondOperand.toFloat()).toString()
+                }
+                MINUS -> {
+                    model.result =
+                        (model.firstOperand.toFloat() - model.secondOperand.toFloat()).toString()
+                }
+                MULTIPLY -> {
+                    model.result =
+                        (model.firstOperand.toFloat() * model.secondOperand.toFloat()).toString()
+                }
+                SHARE -> {
+                    if (model.secondOperand != ZERO) {
+                        model.result =
+                            (model.firstOperand.toFloat() / model.secondOperand.toFloat()).toString()
+                    } else {
+                        view.sendErrorMessage(R.string.toast_msg_divide)
+                    }
                 }
             }
+            view.showResult(model.result)
+            model.firstOperand = EMPTY_STRING
+            model.secondOperand = EMPTY_STRING
+            model.operator = EMPTY_STRING
         }
-        view.showResult(model.result)
-        model.firstOperand = EMPTY_STRING
-        model.secondOperand = EMPTY_STRING
-        model.operator = EMPTY_STRING
     }
 
     fun onPointPressed() {
@@ -90,29 +93,29 @@ class CalculatorPresenter(private val view: CalculatorView, private var model: C
             }
             model.operator.isNotEmpty() && !model.secondOperand.contains(POINT) -> {
                 model.secondOperand += POINT
-                view.setVisor("${model.firstOperand}  ${model.operator}  ${model.secondOperand}")
+                view.setVisor("${model.firstOperand} ${model.operator} ${model.secondOperand}")
             }
         }
     }
 
-    fun onClearPressed(){
+    fun onClearPressed() {
         when {
             model.secondOperand.isNotEmpty() -> {
-                model.secondOperand = model.secondOperand.dropLast(1)
-                view.setVisor("${model.firstOperand}  ${model.operator}  ${model.secondOperand}")
+                model.secondOperand = model.secondOperand.dropLast(DROPPED)
+                view.setVisor("${model.firstOperand} ${model.operator} ${model.secondOperand}")
             }
             model.operator.isNotEmpty() -> {
-                model.operator = model.operator.drop(1)
+                model.operator = model.operator.drop(DROPPED)
                 view.setVisor(model.firstOperand)
             }
             model.firstOperand.isNotEmpty() -> {
-                model.firstOperand = model.firstOperand.dropLast(1)
+                model.firstOperand = model.firstOperand.dropLast(DROPPED)
                 view.setVisor(model.firstOperand)
             }
         }
     }
 
-    fun onClearAllPressed(){
+    fun onClearAllPressed() {
         model.cleanVisor()
         model.result = EMPTY_STRING
         view.setVisor(EMPTY_STRING)
