@@ -19,6 +19,8 @@ import com.example.kotlincalculator.utils.SUM
 import com.example.kotlincalculator.utils.THREE
 import com.example.kotlincalculator.utils.TWO
 import com.example.kotlincalculator.utils.ZERO
+import kotlinx.android.synthetic.main.activity_main.button_clear
+import kotlinx.android.synthetic.main.activity_main.button_clear_all
 import kotlinx.android.synthetic.main.activity_main.button_zero
 import kotlinx.android.synthetic.main.activity_main.button_one
 import kotlinx.android.synthetic.main.activity_main.button_two
@@ -28,14 +30,16 @@ import kotlinx.android.synthetic.main.activity_main.button_five
 import kotlinx.android.synthetic.main.activity_main.button_six
 import kotlinx.android.synthetic.main.activity_main.button_seven
 import kotlinx.android.synthetic.main.activity_main.button_eight
+import kotlinx.android.synthetic.main.activity_main.button_equal
 import kotlinx.android.synthetic.main.activity_main.button_nine
 import kotlinx.android.synthetic.main.activity_main.button_sum
 import kotlinx.android.synthetic.main.activity_main.button_multiply
+import kotlinx.android.synthetic.main.activity_main.button_point
 import kotlinx.android.synthetic.main.activity_main.button_share
 import kotlinx.android.synthetic.main.activity_main.button_subtract
 
 class CalculatorActivity : AppCompatActivity() {
-    var presenter = CalculatorPresenter(CalculatorView(this), CalculatorModel())
+    private var presenter = CalculatorPresenter(CalculatorView(this), CalculatorModel())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,5 +61,9 @@ class CalculatorActivity : AppCompatActivity() {
         button_subtract.setOnClickListener { presenter.onOperatorPressed(MINUS) }
         button_multiply.setOnClickListener { presenter.onOperatorPressed(MULTIPLY) }
         button_share.setOnClickListener { presenter.onOperatorPressed(SHARE) }
+        button_equal.setOnClickListener { presenter.onEqualsPressed() }
+        button_point.setOnClickListener { presenter.onPointPressed() }
+        button_clear.setOnClickListener { presenter.onClearPressed() }
+        button_clear_all.setOnClickListener { presenter.onClearAllPressed() }
     }
 }
