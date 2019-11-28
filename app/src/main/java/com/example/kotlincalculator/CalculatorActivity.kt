@@ -38,7 +38,7 @@ import kotlinx.android.synthetic.main.activity_main.button_point
 import kotlinx.android.synthetic.main.activity_main.button_share
 import kotlinx.android.synthetic.main.activity_main.button_subtract
 
-class CalculatorActivity : AppCompatActivity() {
+open class CalculatorActivity : AppCompatActivity() {
     private var presenter = CalculatorPresenter(CalculatorView(this), CalculatorModel())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
