@@ -15,7 +15,7 @@ import com.example.kotlincalculator.utils.ZERO
 class CalculatorPresenter(private val view: CalculatorView, private var model: CalculatorModel) {
     fun onNumberPressed(number: String) {
         when {
-            model.firstOperand.isEmpty() && model.operator.isEmpty() -> {
+            model.firstOperand.isEmpty() -> {
                 model.firstOperand = number
                 view.setVisor(model.firstOperand)
             }

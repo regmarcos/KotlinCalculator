@@ -11,7 +11,6 @@ import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.verify
-import org.mockito.MockitoAnnotations
 import org.mockito.Mockito.`when` as whenever
 
 class CalculatorPresenterTest {
@@ -32,11 +31,10 @@ class CalculatorPresenterTest {
     private val mockModel: CalculatorModel = mock()
     private val mockView: CalculatorView = mock()
     private val activity: CalculatorActivity = mock()
-    private var presenter: CalculatorPresenter? = null
+    private lateinit var presenter: CalculatorPresenter
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
         whenever(mockView.activity).thenReturn(activity)
         presenter = CalculatorPresenter(mockView, mockModel)
     }
@@ -44,10 +42,9 @@ class CalculatorPresenterTest {
     @Test
     fun onNumberPressedWithFirstOperandEmpty() {
         whenever(mockModel.firstOperand).thenReturn(EMPTY_STRING)
-        whenever(mockModel.operator).thenReturn(EMPTY_STRING)
-        presenter?.onNumberPressed(ONE)
-        verify(mockModel).firstOperand =
-            ONE
+        val number: String = ONE
+        presenter.onNumberPressed(number)
+        assertEquals(ONE,number)
         verify(mockView).setVisor(mockModel.firstOperand)
 
     }
@@ -56,7 +53,7 @@ class CalculatorPresenterTest {
     fun onNumberPressedWithFirstOperandNotEmpty() {
         whenever(mockModel.firstOperand).thenReturn(ONE)
         whenever(mockModel.operator).thenReturn(EMPTY_STRING)
-        presenter?.onNumberPressed(ONE)
+        presenter.onNumberPressed(ONE)
         verify(mockModel).firstOperand =
             ELEVEN
         verify(mockView).setVisor(mockModel.firstOperand)
@@ -67,7 +64,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(PLUS)
         whenever(mockModel.firstOperand).thenReturn(EMPTY_STRING)
         whenever(mockModel.secondOperand).thenReturn(EMPTY_STRING)
-        presenter?.onNumberPressed(ONE)
+        presenter.onNumberPressed(ONE)
         verify(mockModel).secondOperand =
             ONE
         verify(mockView).setVisor("${mockModel.firstOperand} ${mockModel.operator} ${mockModel.secondOperand}")
@@ -78,7 +75,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(PLUS)
         whenever(mockModel.firstOperand).thenReturn(EMPTY_STRING)
         whenever(mockModel.secondOperand).thenReturn(ONE)
-        presenter?.onNumberPressed(ONE)
+        presenter.onNumberPressed(ONE)
         verify(mockModel).secondOperand =
             ELEVEN
         verify(mockView).setVisor("${mockModel.firstOperand} ${mockModel.operator} ${mockModel.secondOperand}")
@@ -89,7 +86,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.firstOperand).thenReturn(EMPTY_STRING)
         whenever(mockModel.operator).thenReturn(EMPTY_STRING)
         whenever(mockModel.result).thenReturn(EMPTY_STRING)
-        presenter?.onOperatorPressed(PLUS)
+        presenter.onOperatorPressed(PLUS)
         verify(mockModel).operator =
             PLUS
         verify(mockView).setVisor("${mockModel.firstOperand} ${mockModel.operator}")
@@ -100,7 +97,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.firstOperand).thenReturn(EMPTY_STRING)
         whenever(mockModel.operator).thenReturn(EMPTY_STRING)
         whenever(mockModel.result).thenReturn(ONE)
-        presenter?.onOperatorPressed(PLUS)
+        presenter.onOperatorPressed(PLUS)
         verify(mockModel).operator =
             PLUS
         verify(mockView).setVisor("${mockModel.firstOperand} ${mockModel.operator}")
@@ -110,7 +107,7 @@ class CalculatorPresenterTest {
     fun onOperatorPressedWithFirstOperandNotEmpty() {
         whenever(mockModel.firstOperand).thenReturn(ONE)
         whenever(mockModel.operator).thenReturn(EMPTY_STRING)
-        presenter?.onOperatorPressed(PLUS)
+        presenter.onOperatorPressed(PLUS)
         verify(mockModel).operator =
             PLUS
         verify(mockView).setVisor("${mockModel.firstOperand} ${mockModel.operator}")
@@ -120,7 +117,7 @@ class CalculatorPresenterTest {
     fun onPointPressedFirstOperand() {
         whenever(mockModel.firstOperand).thenReturn(ONE)
         whenever(mockModel.operator).thenReturn(EMPTY_STRING)
-        presenter?.onPointPressed()
+        presenter.onPointPressed()
         verify(mockModel).firstOperand = "$ONE$POINT"
         verify(mockView).setVisor(mockModel.firstOperand)
     }
@@ -130,7 +127,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.firstOperand).thenReturn(EMPTY_STRING)
         whenever(mockModel.secondOperand).thenReturn(ONE)
         whenever(mockModel.operator).thenReturn(PLUS)
-        presenter?.onPointPressed()
+        presenter.onPointPressed()
         verify(mockModel).secondOperand = "$ONE$POINT"
         verify(mockView).setVisor("${mockModel.firstOperand} ${mockModel.operator} ${mockModel.secondOperand}")
     }
@@ -140,7 +137,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.secondOperand).thenReturn(ELEVEN)
         whenever(mockModel.operator).thenReturn(PLUS)
         whenever(mockModel.firstOperand).thenReturn(EMPTY_STRING)
-        presenter?.onClearPressed()
+        presenter.onClearPressed()
         verify(mockModel).secondOperand =
             ONE
         verify(mockView).setVisor("${mockModel.firstOperand} ${mockModel.operator} ${mockModel.secondOperand}")
@@ -151,7 +148,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.firstOperand).thenReturn(ONE)
         whenever(mockModel.operator).thenReturn(PLUS)
         whenever(mockModel.secondOperand).thenReturn(EMPTY_STRING)
-        presenter?.onClearPressed()
+        presenter.onClearPressed()
         verify(mockModel).operator = EMPTY_STRING
         verify(mockView).setVisor(mockModel.firstOperand)
     }
@@ -161,7 +158,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.firstOperand).thenReturn(ELEVEN)
         whenever(mockModel.operator).thenReturn(EMPTY_STRING)
         whenever(mockModel.secondOperand).thenReturn(EMPTY_STRING)
-        presenter?.onClearPressed()
+        presenter.onClearPressed()
         verify(mockModel).firstOperand =
             ONE
         verify(mockView).setVisor(mockModel.firstOperand)
@@ -173,7 +170,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(PLUS)
         whenever(mockModel.secondOperand).thenReturn(ONE)
         whenever(mockModel.result).thenReturn(ONE)
-        presenter?.onClearAllPressed()
+        presenter.onClearAllPressed()
         verify(mockModel).cleanVisor()
         verify(mockView).setVisor(EMPTY_STRING)
         verify(mockView).showResult(EMPTY_STRING)
@@ -185,7 +182,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(PLUS)
         whenever(mockModel.secondOperand).thenReturn(ONE)
         whenever(mockModel.result).thenReturn(TWO)
-        presenter?.onEqualsPressed()
+        presenter.onEqualsPressed()
         verify(mockView).showResult(mockModel.result)
         assertEquals(TWO, mockModel.result)
     }
@@ -196,7 +193,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(MINUS)
         whenever(mockModel.secondOperand).thenReturn(ONE)
         whenever(mockModel.result).thenReturn(ZERO)
-        presenter?.onEqualsPressed()
+        presenter.onEqualsPressed()
         verify(mockView).showResult(mockModel.result)
         assertEquals(ZERO, mockModel.result)
     }
@@ -207,7 +204,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(MULTIPLY)
         whenever(mockModel.secondOperand).thenReturn(TWO)
         whenever(mockModel.result).thenReturn(FOUR)
-        presenter?.onEqualsPressed()
+        presenter.onEqualsPressed()
         verify(mockView).showResult(mockModel.result)
         assertEquals(FOUR, mockModel.result)
     }
@@ -219,7 +216,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(SHARE)
         whenever(mockModel.secondOperand).thenReturn(TWO)
         whenever(mockModel.result).thenReturn(ONE)
-        presenter?.onEqualsPressed()
+        presenter.onEqualsPressed()
         verify(mockView).showResult(mockModel.result)
         assertEquals(ONE, mockModel.result)
     }
@@ -230,7 +227,7 @@ class CalculatorPresenterTest {
         whenever(mockModel.operator).thenReturn(SHARE)
         whenever(mockModel.secondOperand).thenReturn(ZERO)
         whenever(mockModel.result).thenReturn(EMPTY_STRING)
-        presenter?.onEqualsPressed()
+        presenter.onEqualsPressed()
         verify(mockView).sendErrorMessage(R.string.toast_msg_divide)
     }
 
