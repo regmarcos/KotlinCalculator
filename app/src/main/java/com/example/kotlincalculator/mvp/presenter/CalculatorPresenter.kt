@@ -12,7 +12,7 @@ import com.example.kotlincalculator.utils.SHARE
 import com.example.kotlincalculator.utils.SUM
 import com.example.kotlincalculator.utils.ZERO
 
-class CalculatorPresenter(private val view: CalculatorView, private var model: CalculatorModel) {
+class CalculatorPresenter(private val view: CalculatorView, private val model: CalculatorModel) {
     fun onNumberPressed(number: String) {
         when {
             model.firstOperand.isEmpty() -> {
