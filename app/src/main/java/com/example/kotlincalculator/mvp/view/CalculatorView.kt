@@ -5,7 +5,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.visor_result
 import kotlinx.android.synthetic.main.activity_main.visor_operation
 
-open class CalculatorView(activity: Activity) : ActivityView(activity) {
+class CalculatorView(activity: Activity) : ActivityView(activity) {
     fun setVisor(visor: String) {
         activity?.visor_operation?.text = visor
     }

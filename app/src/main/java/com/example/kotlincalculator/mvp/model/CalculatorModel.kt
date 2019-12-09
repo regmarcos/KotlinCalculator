@@ -3,7 +3,7 @@ package com.example.kotlincalculator.mvp.model
 import com.example.kotlincalculator.utils.EMPTY_STRING
 import com.example.kotlincalculator.utils.ZERO
 
-open class CalculatorModel {
+class CalculatorModel {
 
     var firstOperand: String = EMPTY_STRING
     var secondOperand: String = EMPTY_STRING
