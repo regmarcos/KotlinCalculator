@@ -12,7 +12,7 @@ import com.example.kotlincalculator.utils.SHARE
 import com.example.kotlincalculator.utils.SUM
 import com.example.kotlincalculator.utils.ZERO
 
-class CalculatorPresenter(private val view: CalculatorView, private var model: CalculatorModel) {
+class CalculatorPresenter(private val view: CalculatorView, private val model: CalculatorModel) {
     fun onNumberPressed(number: String) {
         when {
             model.firstOperand.isEmpty() -> {
@@ -39,7 +39,7 @@ class CalculatorPresenter(private val view: CalculatorView, private var model: C
             when {
                 model.firstOperand.isEmpty() && model.result.isEmpty() -> {
                     model.operator = operator
-                    view.setVisor("$  ${model.operator}")
+                    view.setVisor("${model.firstOperand} ${model.operator}")
                 }
                 model.firstOperand.isEmpty() && model.result.isNotEmpty() -> {
                     model.operator = operator
